@@ -1,0 +1,111 @@
+{
+    "manifestVersion": 1,
+    "id": "coverageChartWidget",
+    "version": "1.0.12",
+    "name": "Coverage Chart Widget",
+    "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
+    "publisher": "goelhardik",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "icons": {
+        "default": "images/logo.png"
+    },
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "demands": [
+        "contribution/ms.vss-dashboards-web.widget-sdk-version-2"
+    ],
+    "contributions": [
+        {
+            "id": "CoverageChartWidget.Widget",
+            "type": "ms.vss-dashboards-web.widget",
+            "targets": [
+                "ms.vss-dashboards-web.widget-catalog",
+                ".CoverageChartWidget.Configuration"
+            ],
+            "properties": {
+                "name": "Coverage Chart Widget",
+                "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
+                "catalogIconUrl": "images/catalogImage.png",
+                "previewImageUrl": "images/previewImage.png",
+                "isNameConfigurable": true,
+                "uri": "content/widget.html",
+                "supportedSizes": [
+                    {
+                        "rowSpan": 2,
+                        "columnSpan": 2
+                    },
+                    {
+                        "rowSpan": 1,
+                        "columnSpan": 1
+                    },   
+                    {
+                        "rowSpan": 1,
+                        "columnSpan": 2
+                    },   
+                    {
+                        "rowSpan": 2,
+                        "columnSpan": 3
+                    },
+                    {
+                        "rowSpan":2,
+                        "columnSpan": 4
+                    },
+                    {
+                        "rowSpan": 3,
+                        "columnSpan": 2
+                    },
+                    {
+                        "rowSpan": 3,
+                        "columnSpan": 3
+                    },
+                    {
+                        "rowSpan":3,
+                        "columnSpan": 4
+                    }
+                ],
+                "supportedScopes": [
+                    "project_team"
+                ]
+            }
+        },
+        {
+            "id": "CoverageChartWidget.Configuration",
+            "type": "ms.vss-dashboards-web.widget-configuration",
+            "targets": [
+                "ms.vss-dashboards-web.widget-configuration"
+            ],
+            "properties": {
+                "name": "CoverageChartWidget Configuration", 
+                "description": "Configures CoverageChartWidget", 
+                "uri": "content/configuration.html"
+            }
+        }
+    ],
+    "files": [
+        {
+            "path": "content",
+            "addressable": true
+        },
+        {
+            "path": "images",
+            "addressable": true
+        },
+        {
+            "path": "dist",
+            "addressable": true
+        },
+        {
+            "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "lib"
+        }
+    ],
+    "scopes": [
+        "vso.build"
+    ]
+}
