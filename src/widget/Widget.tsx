@@ -1,11 +1,11 @@
 /// <reference types="vss-web-extension-sdk" />
 
 import * as React from "react";
-import ReactDOM = require("react-dom");
-
+import * as ReactDOM from "react-dom";
+// tslint:disable-next-line:no-require-imports no-implicit-dependencies
 import WidgetHelpers = require("TFS/Dashboards/WidgetHelpers");
+// tslint:disable-next-line:no-require-imports no-implicit-dependencies
 import WidgetContracts = require("TFS/Dashboards/WidgetContracts");
-
 import { CoverageChartComponent } from "./CoverageChartComponent";
 
 export class Widget {
@@ -18,19 +18,19 @@ export class Widget {
     }
 
     private render(widgetSettings: WidgetContracts.WidgetSettings) {
-        let size = {
+        const size = {
             width: widgetSettings.size.columnSpan * 160 + 10,
             height: widgetSettings.size.rowSpan * 160 + 10
         };
 
-        var $reactContainer = $(".react-container");
+        const $reactContainer = $(".react-container");
         // ensure widget occupies full available space
         $reactContainer
             .css("width", size.width)
             .css("height", size.height);
 
 
-        let container = $reactContainer.eq(0).get()[0];
+        const container = $reactContainer.eq(0).get()[0];
         ReactDOM.render(<CoverageChartComponent />, container); // as React.Component<any, any>;
 
         return WidgetHelpers.WidgetStatusHelper.Success();

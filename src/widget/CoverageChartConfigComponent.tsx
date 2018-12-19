@@ -1,11 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 
 export class CoverageChartConfigComponent extends React.Component {
 
     public render(): JSX.Element {
-        return <div className="widget-component">
-            <h2 className="title">Coverage Charts Config</h2>
-            <p>Coming soon...</p>
-        </div>;
+        return (
+            <div className="widget-component">
+                <h2 className="title">Coverage Charts Config</h2>
+                <p>Coming soon...</p>
+            </div>
+        );
     }
 }
