@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="widget-configuration">
+        <div id="react-container">
+            <div id="project-picker">
+                <fieldset>
+                    <label class="config-label">Project Key</label>
+                    <div class="wrapper">
+                        <input id="project-picker-input" class="input-text-box field">
+                    </div>
+                </fieldset>
+            </div>
+            <div id="sonar-url">
+                <fieldset>
+                    <label class="config-label">Sonar URL</label>
+                    <div class="wrapper">
+                        <input id="sonar-url-input" class="input-text-box field">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/VSS.SDK.min.js"></script>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            setupModuleLoader: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+
+        VSS.ready(function () {
+            VSS.require(["dist/configuration"], function (configuration) { });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,14 +1,19 @@
+![](https://yuriburger.visualstudio.com/_apis/public/build/definitions/645f468d-48e2-4982-b857-41bd97378c7b/15/badge)
 
-# Contributing
+# SonarQube Quality Gate Dashboard Widget for VSTS
+Widget to show the SonarQube Quality Gate status for a project
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+![](/static/images/Marketplace.png)
+![](/static/images/Screen1.png)
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+This extension is available on the Visual Studio marketplace.
+https://marketplace.visualstudio.com/items?itemName=yuriburgernet.qualitygatewidget
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+To build and package it yourself:
+
+```javascript 
+npm install
+npm run build
+```
+
+For more information, check this blogpost: [A Quality Gate Dashboard for VSTS](https://yuriburger.net/2018/04/20/a-quality-gate-dashboard-widget-for-vsts/)

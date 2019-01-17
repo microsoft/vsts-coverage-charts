@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+</head>
+
+<body>
+    <div id="react-container">
+    </div>
+    <script src="../lib/VSS.SDK.min.js"></script>
+
+    <script type="text/javascript">
+        // Initialize the VSS sdk
+        VSS.init({
+            explicitNotifyLoaded: true,
+            setupModuleLoader: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+
+        // Wait for the SDK to be initialized
+        VSS.ready(function () {
+            VSS.require(["dist/main"], function (app) { });
+        });
+    </script>
+</body>
+
+</html>

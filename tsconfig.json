@@ -1,13 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "amd",
-        "moduleResolution": "node",    
-        "rootDir": "src/",
-        "outDir": "dist/",
-        "sourceMap": true,
-        "baseUrl": "./dist",
-        "lib": [ "es6", "dom" ],
-        "jsx" :"react"
-    }
+  "compilerOptions": {
+    "module": "amd",
+    "moduleResolution": "node",
+    "target": "es5",
+    "rootDir": "src/",
+    "outDir": "dist/",
+    "types": [
+      "vss-web-extension-sdk"
+    ],
+    "sourceMap": true,
+    "jsx" :"react",
+    "lib": [ "es6", "dom" ],
+  }
 }
