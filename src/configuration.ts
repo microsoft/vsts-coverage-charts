@@ -1,23 +1,21 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { CoverageChartConfigComponent } from "./CoverageChartConfigComponent";
+import { WidgetSettings } from "./WidgetSettings";
 
 VSS.require(["TFS/Dashboards/WidgetHelpers", "VSS/Service", "TFS/Build/RestClient"], function (WidgetHelpers, VSS_Service, RestClient) {
     WidgetHelpers.IncludeWidgetConfigurationStyles();
     VSS.register("CoverageChartWidget-Configuration", function () {
-        // const $projectKey = $("#project-picker-input");
-        // const $sonarUrl = $("#sonar-url-input");
+        let settings;
 
         return {
             load: function (widgetSettings, widgetConfigurationContext) {
-                const settings = JSON.parse(widgetSettings.customSettings.data);
+                settings = <WidgetSettings> JSON.parse(widgetSettings.customSettings.data);
 
-                function configurationChange() {
+                function onSettingsChanged (newSettings: WidgetSettings) {
+                    settings = newSettings;
                     const customSettings = {
-                        data: JSON.stringify({
-                            projectKey: "", // $projectKey.val(),
-                            sonarUrl: "" // $sonarUrl.val()
-                        })
+                        data: JSON.stringify(newSettings)
                     };
                     const eventName = WidgetHelpers.WidgetEvent.ConfigurationChange;
                     const eventArgs = WidgetHelpers.WidgetEvent.Args(customSettings);
@@ -28,33 +26,17 @@ VSS.require(["TFS/Dashboards/WidgetHelpers", "VSS/Service", "TFS/Build/RestClien
                 const container = $reactContainer.eq(0).get()[0];
 
                 ReactDOM.render(React.createElement(CoverageChartConfigComponent, {
-                    restClient: RestClient.getClient()
+                    restClient: RestClient.getClient(),
+                    initialSettings: settings,
+                    onSettingsChanged: (newSettings: WidgetSettings) => onSettingsChanged(newSettings)
                 }), container);
                 VSS.resize();
-
-                // if (settings) {
-                //     if (settings.projectKey) {
-                //         $projectKey.val(settings.projectKey);
-                //     }
-                //     if (settings.sonarUrl) {
-                //         $sonarUrl.val(settings.sonarUrl);
-                //     }
-                // }
-                // $projectKey.on("change", function () {
-                //     configurationChange();
-                // });
-                // $sonarUrl.on("change", function () {
-                //     configurationChange();
-                // });
 
                 return WidgetHelpers.WidgetStatusHelper.Success();
             },
             onSave: function () {
                 const customSettings = {
-                    data: JSON.stringify({
-                        projectKey: "", // $projectKey.val(),
-                        sonarUrl: "" // $sonarUrl.val()
-                    })
+                    data: JSON.stringify(settings)
                 };
                 return WidgetHelpers.WidgetConfigurationSave.Valid(customSettings);
             }

@@ -2,6 +2,7 @@ import * as React from "react";
 import Select from "react-select";
 import * as TFSContracts from "TFS/Build/Contracts";
 import { BuildHttpClient } from "TFS/Build/RestClient";
+import { WidgetSettings } from "./WidgetSettings";
 
 class Build {
     value: TFSContracts.DefinitionReference;
@@ -19,6 +20,8 @@ const builds = [
 ];
 interface IBuildSelectorProps {
     restClient: BuildHttpClient;
+    initialSettings: WidgetSettings;
+    onSettingsChanged: (newSettings: WidgetSettings) => void;
 }
 
 interface IBuildSelectorState {
@@ -44,22 +47,23 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
                     value: d,
                     label: `${d.id} - ${d.name}`
                 } as Build
-            })
+            });
+            
             this.setState({
-                buildDefinitions: mappedDefs
+                buildDefinitions: mappedDefs,
+                selectedItem: mappedDefs.filter((val) => val.value.id === this.props.initialSettings.buildDef)[0]
             });
             console.log("Fetched defs", definitions);
         })
     }
 
     public render() {
-        const { selectedItem } = this.state;
 
         return (
             <Select
                 className="basic-single"
                 classNamePrefix="select"
-                defaultValue={this.state.selectedItem}
+                value={this.state.selectedItem}
                 isClearable={true}
                 isSearchable={true}
                 name="build"
@@ -73,12 +77,11 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         this.setState({
             selectedItem: selectedBuild
         });
+        this.props.onSettingsChanged({...this.props.initialSettings, buildDef: selectedBuild.value.id})
     }
 }
 
-export class CoverageChartConfigComponent extends React.Component<{
-    restClient: BuildHttpClient
-}, {}> {
+export class CoverageChartConfigComponent extends React.Component<IBuildSelectorProps, {}> {
 
     public render() {
         return (
@@ -87,6 +90,8 @@ export class CoverageChartConfigComponent extends React.Component<{
                 <p>Coming soon...</p>
                 <BuildSelector 
                     restClient={this.props.restClient} 
+                    initialSettings={this.props.initialSettings}
+                    onSettingsChanged={this.props.onSettingsChanged}
                     />
                 <div style={{ height: "400px" }} />
             </div>

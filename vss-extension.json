@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "coverageChartWidget",
-  "version": "1.0.59",
+  "version": "1.0.64",
   "name": "Coverage Chart Widget",
   "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
   "publisher": "goelhardik",
