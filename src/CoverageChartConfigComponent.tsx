@@ -1,53 +1,56 @@
 import * as React from "react";
-import { Checkbox } from "office-ui-fabric-react/lib/Checkbox";
-import { Dropdown, IDropdown, DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { ChangeEvent } from "react";
+
+class Build {
+    key: string;
+    text: string;
+}
+
+const builds = [
+    { key: "A", text: "Option a" },
+    { key: "B", text: "Option b" },
+    { key: "C", text: "Option c" },
+    { key: "D", text: "Option d" },
+    { key: "E", text: "Option e" },
+    { key: "F", text: "Option f" },
+    { key: "G", text: "Option g" }
+];
 
 export class DropdownBasicExample extends React.Component<
     {},
     {
-        selectedItem?: { key: string | number | undefined };
-        selectedItems: string[];
+        selectedItem?: string;
     }
     > {
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            selectedItem: undefined,
-            selectedItems: []
+            selectedItem: undefined
         };
     }
     public render() {
-        const { selectedItem, selectedItems } = this.state;
+        const { selectedItem } = this.state;
 
         return (
             <div>
-                <Dropdown
-                    label="Controlled example:"
-                    selectedKey={selectedItem ? selectedItem.key : undefined}
-                    onChange={this.changeState}
-                    onFocus={() => console.log('onFocus called')}
-                    onBlur={() => console.log('onBlur called')}
-                    placeholder="Select an Option"
-                    options={[
-                        { key: 'A', text: 'Option a' },
-                        { key: 'B', text: 'Option b' },
-                        { key: 'C', text: 'Option c' },
-                        { key: 'D', text: 'Option d' },
-                        { key: 'divider_1', text: '-', itemType: DropdownMenuItemType.Divider },
-                        { key: 'E', text: 'Option e' },
-                        { key: 'F', text: 'Option f' },
-                        { key: 'G', text: 'Option g' }
-                    ]}
-                />
+                <form action="/action_page.php">
+                    <input list="builds" name="build" />
+                    <datalist id="builds" onChange={this.onBuildSelectionChanged}>
+                        {builds.map((b: Build, idx: number) => {
+                            return <option value={b.key}>{b.text}</option>;
+                        })}
+                    </datalist>
+                </form>
             </div>
         );
     }
 
-    public changeState = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
-        console.log('here is the things updating...' + item.key + ' ' + item.text + ' ' + item.selected);
-        this.setState({ selectedItem: item });
-    };
+    private onBuildSelectionChanged = (event: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({
+            selectedItem: event.target.value
+        });
+    }
 }
 
 export class CoverageChartConfigComponent extends React.Component {
@@ -55,9 +58,10 @@ export class CoverageChartConfigComponent extends React.Component {
     public render() {
         return (
             <div className="widget-component">
-                <DropdownBasicExample />
                 <h2 className="title">Coverage Charts Config</h2>
                 <p>Coming soon...</p>
+                <DropdownBasicExample />
+                <div style={{ height: "400px" }} />
             </div>
         );
     }
