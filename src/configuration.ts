@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { CoverageChartConfigComponent } from "./CoverageChartConfigComponent";
 
-VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
+VSS.require(["TFS/Dashboards/WidgetHelpers", "VSS/Service", "TFS/Build/RestClient"], function (WidgetHelpers, VSS_Service, RestClient) {
     WidgetHelpers.IncludeWidgetConfigurationStyles();
     VSS.register("CoverageChartWidget-Configuration", function () {
         // const $projectKey = $("#project-picker-input");
@@ -26,8 +26,11 @@ VSS.require("TFS/Dashboards/WidgetHelpers", function (WidgetHelpers) {
 
                 const $reactContainer = $("#react-container");
                 const container = $reactContainer.eq(0).get()[0];
-                ReactDOM.render(React.createElement(CoverageChartConfigComponent), container);
-                // VSS.resize();
+
+                ReactDOM.render(React.createElement(CoverageChartConfigComponent, {
+                    restClient: RestClient.getClient()
+                }), container);
+                VSS.resize();
 
                 // if (settings) {
                 //     if (settings.projectKey) {

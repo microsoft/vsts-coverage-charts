@@ -1,11 +1,14 @@
 {
   "manifestVersion": 1,
   "id": "coverageChartWidget",
-  "version": "1.0.48",
+  "version": "1.0.59",
   "name": "Coverage Chart Widget",
-    "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
-    "publisher": "goelhardik",
-  "scopes": ["vso.build"],
+  "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
+  "publisher": "goelhardik",
+  "scopes": [
+    "vso.build",
+    "vso.extension.default"
+  ],
   "icons": {
     "default": "static/images/logo.png"
   },
@@ -18,8 +21,10 @@
     "api-version/3.0",
     "contribution/ms.vss-dashboards-web.widget-sdk-version-2"
   ],
-  "tags":  [
-    "build", "quality gate", "code quality"
+  "tags": [
+    "build",
+    "quality gate",
+    "code quality"
   ],
   "files": [
     {
@@ -38,7 +43,7 @@
       "path": "static/index.html",
       "addressable": true
     },
-     {
+    {
       "path": "static/configuration.html",
       "addressable": true
     },
@@ -47,7 +52,6 @@
       "addressable": true,
       "packagePath": "lib"
     }
-    
   ],
   "categories": [
     "Azure Pipelines"
@@ -68,38 +72,38 @@
         "catalogIconUrl:": "static/images/logo.png",
         "previewImageUrl": "static/images/logo.png",
         "supportedSizes": [
-            {
-                "rowSpan": 2,
-                "columnSpan": 2
-            },
-            {
-                "rowSpan": 1,
-                "columnSpan": 1
-            },   
-            {
-                "rowSpan": 1,
-                "columnSpan": 2
-            },   
-            {
-                "rowSpan": 2,
-                "columnSpan": 3
-            },
-            {
-                "rowSpan":2,
-                "columnSpan": 4
-            },
-            {
-                "rowSpan": 3,
-                "columnSpan": 2
-            },
-            {
-                "rowSpan": 3,
-                "columnSpan": 3
-            },
-            {
-                "rowSpan":3,
-                "columnSpan": 4
-            }
+          {
+            "rowSpan": 2,
+            "columnSpan": 2
+          },
+          {
+            "rowSpan": 1,
+            "columnSpan": 1
+          },
+          {
+            "rowSpan": 1,
+            "columnSpan": 2
+          },
+          {
+            "rowSpan": 2,
+            "columnSpan": 3
+          },
+          {
+            "rowSpan": 2,
+            "columnSpan": 4
+          },
+          {
+            "rowSpan": 3,
+            "columnSpan": 2
+          },
+          {
+            "rowSpan": 3,
+            "columnSpan": 3
+          },
+          {
+            "rowSpan": 3,
+            "columnSpan": 4
+          }
         ],
         "supportedScopes": [
           "project_team"
