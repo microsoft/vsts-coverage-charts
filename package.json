@@ -27,6 +27,7 @@
     "postcss-preset-env": "^6.5.0",
     "postcss-safe-parser": "^4.0.1",
     "react-dev-utils": "^7.0.1",
+    "react-select": "^2.3.0",
     "rimraf": "^2.6.1",
     "sass-loader": "^7.1.0",
     "tfx-cli": "^0.6.4",

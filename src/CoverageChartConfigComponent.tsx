@@ -1,25 +1,25 @@
 import * as React from "react";
-import { ChangeEvent } from "react";
+import Select from "react-select";
 
 class Build {
-    key: string;
-    text: string;
+    value: string;
+    label: string;
 }
 
 const builds = [
-    { key: "A", text: "Option a" },
-    { key: "B", text: "Option b" },
-    { key: "C", text: "Option c" },
-    { key: "D", text: "Option d" },
-    { key: "E", text: "Option e" },
-    { key: "F", text: "Option f" },
-    { key: "G", text: "Option g" }
+    { value: "A", label: "Option a" },
+    { value: "B", label: "Option b" },
+    { value: "C", label: "Option c" },
+    { value: "D", label: "Option d" },
+    { value: "E", label: "Option e" },
+    { value: "F", label: "Option f" },
+    { value: "G", label: "Option g" }
 ];
 
 export class DropdownBasicExample extends React.Component<
     {},
     {
-        selectedItem?: string;
+        selectedItem: Build;
     }
     > {
 
@@ -33,22 +33,22 @@ export class DropdownBasicExample extends React.Component<
         const { selectedItem } = this.state;
 
         return (
-            <div>
-                <form action="/action_page.php">
-                    <input list="builds" name="build" />
-                    <datalist id="builds" onChange={this.onBuildSelectionChanged}>
-                        {builds.map((b: Build, idx: number) => {
-                            return <option value={b.key}>{b.text}</option>;
-                        })}
-                    </datalist>
-                </form>
-            </div>
+            <Select
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={this.state.selectedItem}
+                isClearable={true}
+                isSearchable={true}
+                name="build"
+                options={builds}
+                onChange={this.onBuildSelectionChanged}
+            />
         );
     }
 
-    private onBuildSelectionChanged = (event: ChangeEvent<HTMLSelectElement>) => {
+    private onBuildSelectionChanged = (selectedBuild: Build) => {
         this.setState({
-            selectedItem: event.target.value
+            selectedItem: selectedBuild
         });
     }
 }
@@ -61,7 +61,6 @@ export class CoverageChartConfigComponent extends React.Component {
                 <h2 className="title">Coverage Charts Config</h2>
                 <p>Coming soon...</p>
                 <DropdownBasicExample />
-                <div style={{ height: "400px" }} />
             </div>
         );
     }
