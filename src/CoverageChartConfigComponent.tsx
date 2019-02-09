@@ -3,21 +3,13 @@ import Select from "react-select";
 import * as TFSContracts from "TFS/Build/Contracts";
 import { BuildHttpClient } from "TFS/Build/RestClient";
 import { WidgetSettings } from "./WidgetSettings";
+import "./CoverageChartConfig.css";
 
 class Build {
     value: TFSContracts.DefinitionReference;
     label: string;
 }
 
-const builds = [
-    { value: "A", label: "Option a" },
-    { value: "B", label: "Option b" },
-    { value: "C", label: "Option c" },
-    { value: "D", label: "Option d" },
-    { value: "E", label: "Option e" },
-    { value: "F", label: "Option f" },
-    { value: "G", label: "Option g" }
-];
 interface IBuildSelectorProps {
     restClient: BuildHttpClient;
     initialSettings: WidgetSettings;
@@ -86,8 +78,7 @@ export class CoverageChartConfigComponent extends React.Component<IBuildSelector
     public render() {
         return (
             <div className="widget-component">
-                <h2 className="title">Coverage Charts Config</h2>
-                <p>Coming soon...</p>
+                <h2 className="coverage-chart-config-title">Coverage Charts Config</h2>
                 <BuildSelector 
                     restClient={this.props.restClient} 
                     initialSettings={this.props.initialSettings}

@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { CoverageChartConfigComponent } from "./CoverageChartConfigComponent";
 import { WidgetSettings } from "./WidgetSettings";
 
-VSS.require(["TFS/Dashboards/WidgetHelpers", "VSS/Service", "TFS/Build/RestClient"], function (WidgetHelpers, VSS_Service, RestClient) {
+VSS.require(["TFS/Dashboards/WidgetHelpers", "TFS/Build/RestClient"], function (WidgetHelpers, RestClient) {
     WidgetHelpers.IncludeWidgetConfigurationStyles();
     VSS.register("CoverageChartWidget-Configuration", function () {
         let settings;
