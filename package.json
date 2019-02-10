@@ -11,6 +11,8 @@
   "devDependencies": {
     "@types/react-dom": "^16.0.11",
     "@types/react-select": "^2.0.11",
+    "@types/recharts": "^1.1.10",
+    "apexcharts": "^3.2.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
     "babel-plugin-named-asset-import": "^0.3.0",
@@ -27,6 +29,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.5.0",
     "postcss-safe-parser": "^4.0.1",
+    "react-apexcharts": "^1.2.1",
     "react-dev-utils": "^7.0.1",
     "react-select": "^2.3.0",
     "rimraf": "^2.6.1",
@@ -43,9 +46,12 @@
   "dependencies": {
     "@types/jquery": "^3.3.29",
     "@types/q": "^1.5.1",
+    "apexcharts": "^3.2.2",
     "office-ui-fabric-react": "^6.126.0",
     "react": "16.4.2",
+    "react-apexcharts": "^1.2.1",
     "react-dom": "16.4.2",
+    "recharts": "^1.4.2",
     "vss-web-extension-sdk": "^5.141.0"
   },
   "name": "vstsextwidget",

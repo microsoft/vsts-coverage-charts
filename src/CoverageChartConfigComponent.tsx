@@ -41,9 +41,10 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
                 } as Build
             });
             
+            var selectedBuildDef = this.props.initialSettings && mappedDefs.filter((val) => val.value.id === this.props.initialSettings.buildDef)[0];
             this.setState({
                 buildDefinitions: mappedDefs,
-                selectedItem: mappedDefs.filter((val) => val.value.id === this.props.initialSettings.buildDef)[0]
+                selectedItem: selectedBuildDef
             });
             console.log("Fetched defs", definitions);
         })

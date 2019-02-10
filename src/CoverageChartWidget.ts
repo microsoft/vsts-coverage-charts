@@ -4,7 +4,7 @@ import { CoverageChartComponent } from "./CoverageChartComponent";
 import { WidgetSettings } from "./WidgetSettings";
 
 export class CoverageChartWidget {
-    constructor(public WidgetHelpers, public RestClient) { }
+    constructor(public WidgetHelpers, public BuildRestClientProvider, public TestRestClientProvider) { }
 
     public load(widgetSettings) {
         return this.showWidget(widgetSettings);
@@ -27,7 +27,8 @@ export class CoverageChartWidget {
 
         ReactDOM.render(React.createElement(CoverageChartComponent, {
             settings: settings,
-            restClient: this.RestClient.getClient()
+            buildRestClient: this.BuildRestClientProvider.getClient(),
+            testRestClient: this.TestRestClientProvider.getClient()
         }), container);
         return this.WidgetHelpers.WidgetStatusHelper.Success();
     }

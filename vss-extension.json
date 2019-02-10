@@ -1,13 +1,14 @@
 {
   "manifestVersion": 1,
   "id": "coverageChartWidget",
-  "version": "1.0.68",
+  "version": "1.0.82",
   "name": "Coverage Chart Widget",
   "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
   "publisher": "goelhardik",
   "scopes": [
     "vso.build",
-    "vso.extension.default"
+    "vso.extension.default",
+    "vso.test"
   ],
   "icons": {
     "default": "static/images/logo.png"
