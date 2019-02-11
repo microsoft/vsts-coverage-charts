@@ -20,9 +20,9 @@ export class CoverageChartWidget {
 
         // Extract settings from widgetSettings.customSettings and ask user to configure one if none is found
         let settings = <WidgetSettings>JSON.parse(widgetSettings.customSettings.data);
-        if (!settings || !settings.buildDef) {
+        if (!settings || !settings.buildDefs || settings.buildDefs.length === 0) {
             console.log("Sorry nothing to show, please configure the settings");
-            return this.WidgetHelpers.WidgetStatusHelper.Success();
+            // return this.WidgetHelpers.WidgetStatusHelper.Success();
         }
 
         ReactDOM.render(React.createElement(CoverageChartComponent, {

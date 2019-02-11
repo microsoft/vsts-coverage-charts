@@ -18,7 +18,9 @@ interface IBuildSelectorProps {
 
 interface IBuildSelectorState {
     buildDefinitions: Build[];
-    selectedItem: Build;
+    selectedItems: Build[];
+    isLoading: boolean;
+    numBuilds: number;
 }
 
 export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSelectorState> {
@@ -27,7 +29,9 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         super(props);
         this.state = {
             buildDefinitions: [],
-            selectedItem: undefined
+            selectedItems: [],
+            isLoading: true,
+            numBuilds: 5
         };
     }
 
@@ -41,12 +45,14 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
                 } as Build
             });
             
-            var selectedBuildDef = this.props.initialSettings && mappedDefs.filter((val) => val.value.id === this.props.initialSettings.buildDef)[0];
+            var selectedBuildDefs = this.props.initialSettings && this.props.initialSettings.buildDefs && this.props.initialSettings.buildDefs.map((bd: number, idx: number) => {
+                return mappedDefs.filter((val) => val.value.id === bd)[0];
+            });
             this.setState({
                 buildDefinitions: mappedDefs,
-                selectedItem: selectedBuildDef
+                selectedItems: selectedBuildDefs,
+                isLoading: false
             });
-            console.log("Fetched defs", definitions);
         })
     }
 
@@ -54,9 +60,11 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
 
         return (
             <Select
+                isMulti
+                isLoading={this.state.isLoading}
                 className="basic-single"
                 classNamePrefix="select"
-                value={this.state.selectedItem}
+                value={this.state.selectedItems}
                 isClearable={true}
                 isSearchable={true}
                 name="build"
@@ -66,11 +74,13 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         );
     }
 
-    private onBuildSelectionChanged = (selectedBuild: Build) => {
+    private onBuildSelectionChanged = (selectedBuilds: Build[]) => {
+        console.log("On change called", selectedBuilds);
         this.setState({
-            selectedItem: selectedBuild
+            selectedItems: selectedBuilds
         });
-        this.props.onSettingsChanged({...this.props.initialSettings, buildDef: selectedBuild.value.id})
+        this.props.onSettingsChanged({...this.props.initialSettings, 
+            buildDefs: selectedBuilds.map((bd: Build, idx: number) => bd.value.id)});
     }
 }
 

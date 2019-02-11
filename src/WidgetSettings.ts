@@ -1,3 +1,4 @@
 export class WidgetSettings {
-    buildDef: number;
+    buildDefs: number[];
+    numBuilds: number;
 }
