@@ -75,7 +75,6 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
     }
 
     private onBuildSelectionChanged = (selectedBuilds: Build[]) => {
-        console.log("On change called", selectedBuilds);
         this.setState({
             selectedItems: selectedBuilds
         });
@@ -89,7 +88,6 @@ export class CoverageChartConfigComponent extends React.Component<IBuildSelector
     public render() {
         return (
             <div className="widget-component">
-                <h2 className="coverage-chart-config-title">Coverage Charts Config</h2>
                 <BuildSelector 
                     restClient={this.props.restClient} 
                     initialSettings={this.props.initialSettings}

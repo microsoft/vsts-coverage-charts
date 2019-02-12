@@ -26,7 +26,7 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
     constructor(props: ICoverageChartComponentProps) {
         super(props);
         this.state = {
-            builds: new Array(props.settings.buildDefs.length)
+            builds: new Array(props.settings && props.settings.buildDefs && props.settings.buildDefs.length || 0)
         };
     }
 
@@ -45,23 +45,23 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
 
     public render(): JSX.Element {
         const chartData = this.transformBuildDataIntoChartData();
-        console.log("Transformed chartdata", chartData);
 
         return (
             <div className="widget-component">
-                <h2 className="title">Coverage Charts</h2>
-                <p>{`${this.state.builds.length} Builds`}</p>
+                <h2 className="coverage-chart-title">Coverage Charts</h2>
                 {chartData.map((singleChartData, idx: number) => {
-                    console.log("rendering", singleChartData, idx);
-                    return <LineChart width={600} height={300} data={singleChartData} syncId="vsts-coverage-charts">
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="line" stroke="#82ca9d" />
-                    </LineChart>;
+                    return <div>
+                        <h3 className="chart-title">{this.state.builds[idx][0].coverage.build.name}</h3>
+                        <LineChart width={600} height={300} data={singleChartData} syncId="vsts-coverage-charts">
+                            <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom" }} />
+                            <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <Tooltip formatter={(val: string) => parseFloat(val).toFixed(2) + " %"} />
+                            <Legend verticalAlign="top" align="right" />
+                            <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{ r: 8 }} />
+                            <Line type="monotone" dataKey="line" stroke="#82ca9d" />
+                        </LineChart>
+                    </div>;
                 })}
 
             </div>
@@ -98,7 +98,6 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                         if (count === numBuilds) {
                             var newBuilds = [...this.state.builds.map((value: IBuildData[]) => [...value])];
                             newBuilds[bdidx] = buildData;
-                            console.log(bdidx, count, newBuilds);
                             this.setState({
                                 builds: newBuilds
                             });
@@ -113,14 +112,14 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
 
     private transformBuildDataIntoChartData() {
         let chartData = new Array(this.props.settings.buildDefs.length);
-        console.log("Chardata", chartData);
         this.state.builds.map((buildsId: IBuildData[], bdidx: number) => {
             chartData[bdidx] = [];
             buildsId.map((bd: IBuildData, idx: number) => {
+                var time = bd.build.finishTime;
                 var buildDataForChart = {
-                    date: bd.build.finishTime.toUTCString(),
-                    branch: bd.coverage.coverageData[0].coverageStats[0].covered / bd.coverage.coverageData[0].coverageStats[0].total,
-                    line: bd.coverage.coverageData[0].coverageStats[1].covered / bd.coverage.coverageData[0].coverageStats[1].total
+                    date: bd.build.id,
+                    branch: 100 * bd.coverage.coverageData[0].coverageStats[0].covered / bd.coverage.coverageData[0].coverageStats[0].total,
+                    line: 100 * bd.coverage.coverageData[0].coverageStats[1].covered / bd.coverage.coverageData[0].coverageStats[1].total
                 };
                 chartData[bdidx].push(buildDataForChart);
             });

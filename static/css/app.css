@@ -89,3 +89,34 @@ span {
     height: 5em;
   }
 }
+
+.coverage-chart-config-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 3.75rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.00833em;
+}
+
+.coverage-chart-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 2.25rem;
+  margin: 30px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.00833em;
+  text-align: center;
+}
+
+.chart-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1.5rem;
+  margin: 10px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.00833em;
+  text-align: center;
+}
