@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { CoverageChartComponent } from "./CoverageChartComponent";
 import { WidgetSettings } from "./WidgetSettings";
 
-export class CoverageChartWidget {
+export class CodeCoverageCharts {
     constructor(public WidgetHelpers, public BuildRestClientProvider, public TestRestClientProvider) { }
 
     public load(widgetSettings) {
@@ -22,7 +22,10 @@ export class CoverageChartWidget {
         let settings = <WidgetSettings>JSON.parse(widgetSettings.customSettings.data);
         if (!settings || !settings.buildDefs || settings.buildDefs.length === 0) {
             console.log("Sorry nothing to show, please configure the settings");
-            // return this.WidgetHelpers.WidgetStatusHelper.Success();
+            settings = {
+                buildDefs: [],
+                numBuilds: 5
+            };
         }
 
         ReactDOM.render(React.createElement(CoverageChartComponent, {

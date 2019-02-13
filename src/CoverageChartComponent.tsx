@@ -45,14 +45,15 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
 
     public render(): JSX.Element {
         const chartData = this.transformBuildDataIntoChartData();
+        console.log("Char data", chartData);
 
         return (
             <div className="widget-component">
                 <h2 className="coverage-chart-title">Coverage Charts</h2>
                 {chartData.map((singleChartData, idx: number) => {
                     return <div>
-                        <h3 className="chart-title">{this.state.builds[idx][0].coverage.build.name}</h3>
-                        <LineChart width={600} height={300} data={singleChartData} syncId="vsts-coverage-charts">
+                        <h3 className="chart-title">{this.state.builds[idx][0].build.definition.name}</h3>
+                        <LineChart width={600} height={350} data={singleChartData} syncId="vsts-coverage-charts">
                             <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom" }} />
                             <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
                             <CartesianGrid strokeDasharray="3 3" />

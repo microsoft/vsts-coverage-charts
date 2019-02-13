@@ -5,7 +5,7 @@ import { WidgetSettings } from "./WidgetSettings";
 
 VSS.require(["TFS/Dashboards/WidgetHelpers", "TFS/Build/RestClient"], function (WidgetHelpers, RestClient) {
     WidgetHelpers.IncludeWidgetConfigurationStyles();
-    VSS.register("CoverageChartWidget-Configuration", function () {
+    VSS.register("CodeCoverageCharts-Configuration", function () {
         let settings;
 
         return {

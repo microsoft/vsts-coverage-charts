@@ -1,8 +1,8 @@
 {
   "manifestVersion": 1,
-  "id": "coverageChartWidget",
-  "version": "1.0.109",
-  "name": "Coverage Chart Widget",
+  "id": "vsts-coverage-charts",
+  "version": "1.0.114",
+  "name": "Code Coverage Charts",
   "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
   "publisher": "goelhardik",
   "scopes": [
@@ -59,14 +59,14 @@
   ],
   "contributions": [
     {
-      "id": "CoverageChartWidget",
+      "id": "CodeCoverageCharts",
       "type": "ms.vss-dashboards-web.widget",
       "targets": [
         "ms.vss-dashboards-web.widget-catalog",
-        ".CoverageChartWidget-Configuration"
+        ".CodeCoverageCharts-Configuration"
       ],
       "properties": {
-        "name": "Coverage Chart Widget",
+        "name": "Code Coverage Charts",
         "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
         "uri": "static/index.html",
         "isNameConfigurable": true,
@@ -75,14 +75,6 @@
         "supportedSizes": [
           {
             "rowSpan": 2,
-            "columnSpan": 2
-          },
-          {
-            "rowSpan": 1,
-            "columnSpan": 1
-          },
-          {
-            "rowSpan": 1,
             "columnSpan": 2
           },
           {
@@ -116,22 +108,6 @@
           {
             "rowSpan": 6,
             "columnSpan": 4
-          },
-          {
-            "rowSpan": 7,
-            "columnSpan": 4
-          },
-          {
-            "rowSpan": 8,
-            "columnSpan": 4
-          },
-          {
-            "rowSpan": 9,
-            "columnSpan": 4
-          },
-          {
-            "rowSpan": 10,
-            "columnSpan": 4
           }
         ],
         "supportedScopes": [
@@ -140,14 +116,14 @@
       }
     },
     {
-      "id": "CoverageChartWidget-Configuration",
+      "id": "CodeCoverageCharts-Configuration",
       "type": "ms.vss-dashboards-web.widget-configuration",
       "targets": [
         "ms.vss-dashboards-web.widget-configuration"
       ],
       "properties": {
-        "name": "CoverageChartWidget Configuration",
-        "description": "Configures CoverageChartWidget to show code coverage from builds",
+        "name": "CodeCoverageCharts Configuration",
+        "description": "Configures CodeCoverageCharts to show code coverage from builds",
         "uri": "static/configuration.html"
       }
     }
