@@ -119,4 +119,5 @@ span {
   line-height: 1;
   letter-spacing: -0.00833em;
   text-align: center;
+  max-height: 10%;
 }

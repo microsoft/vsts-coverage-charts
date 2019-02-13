@@ -20,11 +20,13 @@ export class CodeCoverageCharts {
 
         // Extract settings from widgetSettings.customSettings and ask user to configure one if none is found
         let settings = <WidgetSettings>JSON.parse(widgetSettings.customSettings.data);
+        settings.size = widgetSettings.size;
         if (!settings || !settings.buildDefs || settings.buildDefs.length === 0) {
             console.log("Sorry nothing to show, please configure the settings");
             settings = {
                 buildDefs: [],
-                numBuilds: 5
+                numBuilds: 5,
+                size: widgetSettings.size
             };
         }
 

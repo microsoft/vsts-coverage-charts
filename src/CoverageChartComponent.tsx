@@ -3,7 +3,7 @@ import { WidgetSettings } from "./WidgetSettings";
 import { BuildHttpClient } from "TFS/Build/RestClient";
 import { TestHttpClient } from "TFS/TestManagement/RestClient";
 import { BuildStatus, BuildResult, Build } from "TFS/Build/Contracts";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { CodeCoverageSummary } from "TFS/TestManagement/Contracts";
 
 interface IBuildData {
@@ -46,22 +46,27 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
     public render(): JSX.Element {
         const chartData = this.transformBuildDataIntoChartData();
         console.log("Char data", chartData);
+        var widgetSize = this.props.settings.size;//.rowSpan * 160 + 10
+        var chartHeight = (widgetSize.rowSpan * 160 - 96) / (this.props.settings.buildDefs.length || 1);
+        console.log("Widget size", widgetSize);
 
         return (
             <div className="widget-component">
                 <h2 className="coverage-chart-title">Coverage Charts</h2>
                 {chartData.map((singleChartData, idx: number) => {
-                    return <div>
+                    return <div  style={{ height: chartHeight, width: widgetSize.columnSpan * 160 + 10}}>
                         <h3 className="chart-title">{this.state.builds[idx][0].build.definition.name}</h3>
-                        <LineChart width={600} height={350} data={singleChartData} syncId="vsts-coverage-charts">
-                            <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom" }} />
-                            <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Tooltip formatter={(val: string) => parseFloat(val).toFixed(2) + " %"} />
-                            <Legend verticalAlign="top" align="right" />
-                            <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{ r: 8 }} />
-                            <Line type="monotone" dataKey="line" stroke="#82ca9d" />
-                        </LineChart>
+                        <ResponsiveContainer width="100%" height="90%">
+                            <LineChart data={singleChartData} syncId="vsts-coverage-charts">
+                                <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom" }} />
+                                <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <Tooltip formatter={(val: string) => parseFloat(val).toFixed(2) + " %"} />
+                                <Legend verticalAlign="top" align="right" />
+                                <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{ r: 8 }} />
+                                <Line type="monotone" dataKey="line" stroke="#82ca9d" />
+                            </LineChart>
+                        </ResponsiveContainer>
                     </div>;
                 })}
 
