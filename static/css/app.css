@@ -121,3 +121,32 @@ span {
   text-align: center;
   max-height: 10%;
 }
+
+.config-select-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1.25rem;
+  margin-left: 0px;
+  margin: 10px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.00833em;
+  max-height: 10%;
+}
+
+.config-text-title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1.25rem;
+  margin-left: 0px;
+  margin-top: 20px;
+  margin: 10px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.00833em;
+  max-height: 10%;
+}
+
+.config-numeric-input {
+  width: 100%
+}

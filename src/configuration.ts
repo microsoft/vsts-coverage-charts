@@ -35,7 +35,6 @@ VSS.require(["TFS/Dashboards/WidgetHelpers", "TFS/Build/RestClient"], function (
                 return WidgetHelpers.WidgetStatusHelper.Success();
             },
             onSave: function () {
-                settings.numBuilds = 5;
                 const customSettings = {
                     data: JSON.stringify(settings)
                 };

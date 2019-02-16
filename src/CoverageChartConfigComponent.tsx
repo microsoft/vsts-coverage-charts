@@ -4,6 +4,7 @@ import * as TFSContracts from "TFS/Build/Contracts";
 import { BuildHttpClient } from "TFS/Build/RestClient";
 import { WidgetSettings } from "./WidgetSettings";
 import "./CoverageChartConfig.css";
+import * as NumericInput from "react-numeric-input";
 
 class Build {
     value: TFSContracts.DefinitionReference;
@@ -31,7 +32,7 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
             buildDefinitions: [],
             selectedItems: [],
             isLoading: true,
-            numBuilds: 5
+            numBuilds: props.initialSettings && props.initialSettings.numBuilds || 5
         };
     }
 
@@ -44,7 +45,7 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
                     label: `${d.id} - ${d.name}`
                 } as Build
             });
-            
+
             var selectedBuildDefs = this.props.initialSettings && this.props.initialSettings.buildDefs && this.props.initialSettings.buildDefs.map((bd: number, idx: number) => {
                 return mappedDefs.filter((val) => val.value.id === bd)[0];
             });
@@ -59,18 +60,28 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
     public render() {
 
         return (
-            <Select
-                isMulti
-                isLoading={this.state.isLoading}
-                className="basic-single"
-                classNamePrefix="select"
-                value={this.state.selectedItems}
-                isClearable={true}
-                isSearchable={true}
-                name="build"
-                options={this.state.buildDefinitions}
-                onChange={this.onBuildSelectionChanged}
-            />
+            <div>
+                <h4 className="config-select-title">Build definitions</h4>
+                <Select
+                    isMulti
+                    isLoading={this.state.isLoading}
+                    className="basic-single"
+                    classNamePrefix="select"
+                    value={this.state.selectedItems}
+                    isClearable={true}
+                    isSearchable={true}
+                    name="build"
+                    options={this.state.buildDefinitions}
+                    onChange={this.onBuildSelectionChanged}
+                />
+                <h4 className="config-text-title">Number of builds</h4>
+                <NumericInput
+                    min={1}
+                    max={50}
+                    value={this.state.numBuilds}
+                    onChange={(val: number) => { this.onNumBuildsChanged(val) }}
+                    className="config-numeric-input" />
+            </div>
         );
     }
 
@@ -78,8 +89,22 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         this.setState({
             selectedItems: selectedBuilds
         });
-        this.props.onSettingsChanged({...this.props.initialSettings, 
-            buildDefs: selectedBuilds.map((bd: Build, idx: number) => bd.value.id)});
+        this.props.onSettingsChanged({
+            size: this.props.initialSettings && this.props.initialSettings.size,
+            buildDefs: selectedBuilds.map((bd: Build, idx: number) => bd.value.id),
+            numBuilds: this.state.numBuilds
+        });
+    }
+
+    private onNumBuildsChanged = (numBuilds: number) => {
+        this.setState({
+            numBuilds: numBuilds
+        });
+        this.props.onSettingsChanged({
+            size: this.props.initialSettings && this.props.initialSettings.size,
+            buildDefs: this.state.selectedItems.map((bd: Build, idx: number) => bd.value.id),
+            numBuilds: numBuilds
+        });
     }
 }
 
@@ -88,11 +113,11 @@ export class CoverageChartConfigComponent extends React.Component<IBuildSelector
     public render() {
         return (
             <div className="widget-component">
-                <BuildSelector 
-                    restClient={this.props.restClient} 
+                <BuildSelector
+                    restClient={this.props.restClient}
                     initialSettings={this.props.initialSettings}
                     onSettingsChanged={this.props.onSettingsChanged}
-                    />
+                />
                 <div style={{ height: "400px" }} />
             </div>
         );

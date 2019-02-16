@@ -31,7 +31,8 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
     }
 
     componentDidUpdate(prevProps: ICoverageChartComponentProps) {
-        if (JSON.stringify(prevProps.settings.buildDefs) !== JSON.stringify(this.props.settings.buildDefs)) {
+        if (JSON.stringify(prevProps.settings.buildDefs) !== JSON.stringify(this.props.settings.buildDefs) ||
+            prevProps.settings.numBuilds !== this.props.settings.numBuilds) {
             this.setState({
                 builds: new Array(this.props.settings.buildDefs.length)
             });
@@ -45,20 +46,18 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
 
     public render(): JSX.Element {
         const chartData = this.transformBuildDataIntoChartData();
-        console.log("Char data", chartData);
-        var widgetSize = this.props.settings.size;//.rowSpan * 160 + 10
+        var widgetSize = this.props.settings.size;
         var chartHeight = (widgetSize.rowSpan * 160 - 96) / (this.props.settings.buildDefs.length || 1);
-        console.log("Widget size", widgetSize);
 
         return (
             <div className="widget-component">
                 <h2 className="coverage-chart-title">Coverage Charts</h2>
                 {chartData.map((singleChartData, idx: number) => {
-                    return <div  style={{ height: chartHeight, width: widgetSize.columnSpan * 160 + 10}}>
+                    return <div style={{ height: chartHeight, width: widgetSize.columnSpan * 160 + 10 }}>
                         <h3 className="chart-title">{this.state.builds[idx][0].build.definition.name}</h3>
                         <ResponsiveContainer width="100%" height="90%">
                             <LineChart data={singleChartData} syncId="vsts-coverage-charts">
-                                <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom" }} />
+                                <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom", offset: 25 }} />
                                 <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <Tooltip formatter={(val: string) => parseFloat(val).toFixed(2) + " %"} />
@@ -76,44 +75,48 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
 
     private fetchBuilds(buildDefs: number[]) {
         var numBuilds = this.props.settings.numBuilds;
-        buildDefs.map((buildDef: number, bdidx: number) => {
-            var buildData = [];
+        try {
+            buildDefs.map((buildDef: number, bdidx: number) => {
+                var buildData = [];
 
-            var context = VSS.getWebContext();
-            this.props.buildRestClient.getBuilds(context.project.id,
-                [buildDef],
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                BuildStatus.Completed,
-                BuildResult.Succeeded,
-                undefined,
-                undefined,
-                numBuilds
-            ).then((builds: Build[]) => {
-                var count = 0;
-                builds.map((b: Build, idx: number) => {
-                    // fetch coverage for each build
-                    this.props.testRestClient.getCodeCoverageSummary(context.project.id, b.id).then((summary: CodeCoverageSummary) => {
-                        count++;
-                        buildData.push({ build: b, coverage: summary });
-                        buildData = buildData.sort((a: IBuildData, b: IBuildData) => a.build.id - b.build.id);
-                        if (count === numBuilds) {
-                            var newBuilds = [...this.state.builds.map((value: IBuildData[]) => [...value])];
-                            newBuilds[bdidx] = buildData;
-                            this.setState({
-                                builds: newBuilds
-                            });
-                        }
+                var context = VSS.getWebContext();
+                this.props.buildRestClient.getBuilds(context.project.id,
+                    [buildDef],
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    BuildStatus.Completed,
+                    BuildResult.Succeeded,
+                    undefined,
+                    undefined,
+                    numBuilds
+                ).then((builds: Build[]) => {
+                    var count = 0;
+                    builds.map((b: Build, idx: number) => {
+                        // fetch coverage for each build
+                        this.props.testRestClient.getCodeCoverageSummary(context.project.id, b.id).then((summary: CodeCoverageSummary) => {
+                            count++;
+                            buildData.push({ build: b, coverage: summary });
+                            buildData = buildData.sort((a: IBuildData, b: IBuildData) => a.build.id - b.build.id);
+                            if (count === numBuilds) {
+                                var newBuilds = [...this.state.builds.map((value: IBuildData[]) => [...value])];
+                                newBuilds[bdidx] = buildData;
+                                this.setState({
+                                    builds: newBuilds
+                                });
+                            }
+                        }, (err: any) => {
+                            console.log("Please check your configuration - the requested builds/build-definitions were not found.");
+                        });
                     });
                 });
-            });
+            })
+        } catch {
+            console.log("Please check your configuration - the requested builds/build-definitions were not found.");
         }
-        )
-
     }
 
     private transformBuildDataIntoChartData() {
