@@ -5,4 +5,4 @@ Widget to show charts of code coverage for selected build definitions
 
 Screenshot:
 
-![](/static/images/screenshot.png)
+![](/static/images/screenshot.PNG)
