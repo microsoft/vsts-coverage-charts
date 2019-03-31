@@ -57,13 +57,26 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                         <h3 className="chart-title">{this.state.builds[idx][0].build.definition.name}</h3>
                         <ResponsiveContainer width="100%" height="90%">
                             <LineChart data={singleChartData} syncId="vsts-coverage-charts">
-                                <XAxis dataKey="date" label={{ value: "Build ID", position: "bottom", offset: 25 }} />
+                                <XAxis dataKey="date" label={{ value: "Build #", position: "bottom", offset: 25 }} />
                                 <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
                                 <CartesianGrid strokeDasharray="3 3" />
-                                <Tooltip formatter={(val: string) => parseFloat(val).toFixed(2) + " %"} />
+                                <Tooltip
+                                    formatter={(val: string) => parseFloat(val).toFixed(2) + " %"}
+                                    labelFormatter={(val: string) => "Build # " + val}
+                                />
                                 <Legend verticalAlign="top" align="right" />
-                                <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{ r: 8 }} />
-                                <Line type="monotone" dataKey="line" stroke="#82ca9d" />
+                                <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{
+                                    r: 8, 
+                                    onClick: (arg: any) => {
+                                        window.open(arg.payload.buildUrl);
+                                    }
+                                }} />
+                                <Line type="monotone" dataKey="line" stroke="#82ca9d" activeDot={{
+                                    r: 8,
+                                    onClick: (arg: any) => {
+                                        window.open(arg.payload.buildUrl);
+                                    }
+                                }}/>
                             </LineChart>
                         </ResponsiveContainer>
                     </div>;
@@ -126,7 +139,8 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
             buildsId.map((bd: IBuildData, idx: number) => {
                 var time = bd.build.finishTime;
                 var buildDataForChart = {
-                    date: bd.build.id,
+                    date: bd.build.buildNumber,
+                    buildUrl: bd.build._links.web.href,
                     branch: 100 * bd.coverage.coverageData[0].coverageStats[0].covered / bd.coverage.coverageData[0].coverageStats[0].total,
                     line: 100 * bd.coverage.coverageData[0].coverageStats[1].covered / bd.coverage.coverageData[0].coverageStats[1].total
                 };
