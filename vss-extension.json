@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "vsts-coverage-charts",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "name": "Code Coverage Charts",
   "description": "An Azure DevOps widget to display code coverage charts from selected builds.",
   "publisher": "ms-1es",
