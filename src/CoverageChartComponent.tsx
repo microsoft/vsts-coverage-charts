@@ -55,7 +55,7 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                 {chartData.map((singleChartData, idx: number) => {
                     return <div style={{ height: chartHeight, width: widgetSize.columnSpan * 160 + 10 }}>
                         <h3 className="chart-title">{this.state.builds[idx][0].build.definition.name}</h3>
-                        <ResponsiveContainer width="100%" height="90%">
+                        <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={singleChartData} syncId="vsts-coverage-charts">
                                 <XAxis dataKey="date" label={{ value: "Build #", position: "bottom", offset: 25 }} />
                                 <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
