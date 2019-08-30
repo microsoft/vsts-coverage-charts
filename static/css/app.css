@@ -101,10 +101,10 @@ span {
 
 .coverage-chart-title {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 10px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.00833em;
   text-align: center;
@@ -113,7 +113,8 @@ span {
 .chart-title {
   color: rgba(0, 0, 0, 0.87);
   font-size: 1.0rem;
-  margin: 5px;
+  margin-top: 0px;
+  margin-bottom: -10px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1;

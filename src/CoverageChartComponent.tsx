@@ -47,7 +47,7 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
     public render(): JSX.Element {
         const chartData = this.transformBuildDataIntoChartData();
         var widgetSize = this.props.settings.size;
-        var chartHeight = (widgetSize.rowSpan * 160 - 96) / (this.props.settings.buildDefs.length || 1);
+        var chartHeight = (widgetSize.rowSpan * 160 - 56) / (this.props.settings.buildDefs.length || 1);
 
         return (
             <div className="widget-component">
@@ -58,7 +58,11 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={singleChartData} syncId="vsts-coverage-charts">
                                 <XAxis dataKey="date" label={{ value: "Build #", position: "bottom", offset: 25 }} />
-                                <YAxis tickFormatter={(val: string) => val + " %"} label={{ value: "Coverage", angle: -90, position: "insideLeft" }} />
+                                <YAxis
+                                    tickFormatter={(val: string) => val + " %"}
+                                    label={{ value: "Coverage", angle: -90, position: "insideLeft" }}
+                                    domain={['dataMin - 5', 'dataMax + 5']}
+                                />
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <Tooltip
                                     formatter={(val: string) => parseFloat(val).toFixed(2) + " %"}
@@ -66,7 +70,7 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                                 />
                                 <Legend verticalAlign="top" align="right" />
                                 <Line type="monotone" dataKey="branch" stroke="#8884d8" activeDot={{
-                                    r: 8, 
+                                    r: 8,
                                     onClick: (arg: any) => {
                                         window.open(arg.payload.buildUrl);
                                     }
@@ -76,7 +80,7 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                                     onClick: (arg: any) => {
                                         window.open(arg.payload.buildUrl);
                                     }
-                                }}/>
+                                }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>;
