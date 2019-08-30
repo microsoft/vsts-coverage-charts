@@ -59,9 +59,9 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                             <LineChart data={singleChartData} syncId="vsts-coverage-charts">
                                 <XAxis dataKey="date" label={{ value: "Build #", position: "bottom", offset: 25 }} />
                                 <YAxis
-                                    tickFormatter={(val: string) => val + " %"}
-                                    label={{ value: "Coverage", angle: -90, position: "insideLeft" }}
-                                    domain={['dataMin - 5', 'dataMax + 5']}
+                                    tickFormatter={(val: string) => parseFloat(val).toFixed(2) + " %"}
+                                    // label={{ value: "Coverage", angle: -90, position: "insideLeft" }}
+                                    domain={[`dataMin - ${this.props.settings.yaxisRange}`, `dataMax + ${this.props.settings.yaxisRange}`]}
                                 />
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <Tooltip
@@ -75,12 +75,13 @@ export class CoverageChartComponent extends React.Component<ICoverageChartCompon
                                         window.open(arg.payload.buildUrl);
                                     }
                                 }} />
-                                <Line type="monotone" dataKey="line" stroke="#82ca9d" activeDot={{
+                                {this.props.settings.showLineCoverage && <Line type="monotone" dataKey="line" stroke="#82ca9d" activeDot={{
                                     r: 8,
                                     onClick: (arg: any) => {
                                         window.open(arg.payload.buildUrl);
                                     }
                                 }} />
+                                }
                             </LineChart>
                         </ResponsiveContainer>
                     </div>;

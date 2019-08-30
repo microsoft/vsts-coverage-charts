@@ -125,29 +125,38 @@ span {
 
 .config-select-title {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 1.25rem;
+  font-size: 1.0rem;
+  padding-left: 0px;
   margin-left: 0px;
-  margin: 10px;
+  margin-bottom: 10px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.00833em;
   max-height: 10%;
 }
 
 .config-text-title {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 1.25rem;
+  font-size: 1.0rem;
+  padding-left: 0px;
   margin-left: 0px;
+  margin-bottom: 10px;
   margin-top: 20px;
-  margin: 10px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.00833em;
   max-height: 10%;
+}
+
+.config-checkbox {
+  font-style: normal;
 }
 
 .config-numeric-input {
   width: 100%
+}
+
+.chart-heading {
+  display: grid;
+  grid-template-columns: auto min-content;
 }

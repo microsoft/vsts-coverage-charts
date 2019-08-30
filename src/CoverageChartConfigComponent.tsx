@@ -22,6 +22,8 @@ interface IBuildSelectorState {
     selectedItems: Build[];
     isLoading: boolean;
     numBuilds: number;
+    yaxisDomain: number;
+    showLineCoverage: boolean;
 }
 
 export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSelectorState> {
@@ -32,7 +34,9 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
             buildDefinitions: [],
             selectedItems: [],
             isLoading: true,
-            numBuilds: props.initialSettings && props.initialSettings.numBuilds || 5
+            numBuilds: props.initialSettings && props.initialSettings.numBuilds || 5,
+            yaxisDomain: props.initialSettings && props.initialSettings.yaxisRange,
+            showLineCoverage: props.initialSettings && props.initialSettings.showLineCoverage
         };
     }
 
@@ -74,13 +78,26 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
                     options={this.state.buildDefinitions}
                     onChange={this.onBuildSelectionChanged}
                 />
-                <h4 className="config-text-title">Number of builds</h4>
+                <h4 className="config-text-title">Number of builds to show</h4>
                 <NumericInput
                     min={1}
                     max={50}
                     value={this.state.numBuilds}
                     onChange={(val: number) => { this.onNumBuildsChanged(val) }}
-                    className="config-numeric-input" />
+                    className="config-numeric-input"
+                />
+                <h4 className="config-text-title">Y-axis domain padding</h4>
+                <NumericInput
+                    min={0}
+                    max={50}
+                    value={this.state.yaxisDomain}
+                    onChange={(val: number) => { this.onYaxisDomainChanged(val) }}
+                    className="config-numeric-input"
+                />
+                <div className="config-text-title config-checkbox" onClick={this.onShowLineCoverageChanged}>
+                    <input type="checkbox" checked={this.state.showLineCoverage} onChange={this.onShowLineCoverageChanged} style={{ verticalAlign: "text-top", marginLeft: "0px" }} />
+                    <span style={{ fontStyle: "normal" }}>Show line coverage</span>
+                </div>
             </div>
         );
     }
@@ -92,7 +109,9 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         this.props.onSettingsChanged({
             size: this.props.initialSettings && this.props.initialSettings.size,
             buildDefs: selectedBuilds.map((bd: Build, idx: number) => bd.value.id),
-            numBuilds: this.state.numBuilds
+            numBuilds: this.state.numBuilds,
+            showLineCoverage: this.state.showLineCoverage,
+            yaxisRange: this.state.yaxisDomain
         });
     }
 
@@ -103,7 +122,36 @@ export class BuildSelector extends React.Component<IBuildSelectorProps, IBuildSe
         this.props.onSettingsChanged({
             size: this.props.initialSettings && this.props.initialSettings.size,
             buildDefs: this.state.selectedItems.map((bd: Build, idx: number) => bd.value.id),
-            numBuilds: numBuilds
+            numBuilds: numBuilds,
+            showLineCoverage: this.state.showLineCoverage,
+            yaxisRange: this.state.yaxisDomain
+        });
+    }
+
+    private onYaxisDomainChanged = (yaxisDomain: number) => {
+        this.setState({
+            yaxisDomain: yaxisDomain
+        });
+        this.props.onSettingsChanged({
+            size: this.props.initialSettings && this.props.initialSettings.size,
+            buildDefs: this.state.selectedItems.map((bd: Build, idx: number) => bd.value.id),
+            numBuilds: this.state.numBuilds,
+            showLineCoverage: this.state.showLineCoverage,
+            yaxisRange: yaxisDomain
+        });
+    }
+
+    private onShowLineCoverageChanged = () => {
+        const newVal = !this.state.showLineCoverage;
+        this.setState({
+            showLineCoverage: newVal
+        });
+        this.props.onSettingsChanged({
+            size: this.props.initialSettings && this.props.initialSettings.size,
+            buildDefs: this.state.selectedItems.map((bd: Build, idx: number) => bd.value.id),
+            numBuilds: this.state.numBuilds,
+            showLineCoverage: newVal,
+            yaxisRange: this.state.yaxisDomain
         });
     }
 }

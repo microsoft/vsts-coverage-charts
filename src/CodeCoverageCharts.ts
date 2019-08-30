@@ -26,7 +26,9 @@ export class CodeCoverageCharts {
             settings = {
                 buildDefs: [],
                 numBuilds: 5,
-                size: widgetSettings.size
+                size: widgetSettings.size,
+                showLineCoverage: true,
+                yaxisRange: 1
             };
         }
 
