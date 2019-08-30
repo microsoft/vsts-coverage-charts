@@ -149,14 +149,10 @@ span {
 }
 
 .config-checkbox {
-  font-style: normal;
+  width: max-content;
+  cursor: pointer;
 }
 
 .config-numeric-input {
   width: 100%
-}
-
-.chart-heading {
-  display: grid;
-  grid-template-columns: auto min-content;
 }
